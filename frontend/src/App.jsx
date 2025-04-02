@@ -1,14 +1,6 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-// Components
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import HealthcareBot from './components/Chatbot';
-
-// Pages
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Doctors from './pages/Doctors';
 import Login from './pages/Login';
@@ -17,10 +9,13 @@ import Contact from './pages/Contact';
 import Appointment from './pages/Appointment';
 import MyAppointments from './pages/MyAppointments';
 import MyProfile from './pages/MyProfile';
+import Footer from './components/Footer';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify';
+import HealthcareBot from './components/Chatbot';
 import DoctorForm from './pages/NearbyDoctors';
 import SearchResults from './pages/SearchResults';  // ✅ Import SearchResults
-
 
 const App = () => {
   return (
@@ -36,14 +31,15 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/NearbyDoctors' element={<DoctorForm />} />
+        <Route path='/search-results' element={<SearchResults />} />  {/* ✅ Added SearchResults Route */}
         <Route path='/appointment/:docId' element={<Appointment />} />
         <Route path='/my-appointments' element={<MyAppointments />} />
         <Route path='/my-profile' element={<MyProfile />} />
-        <Route path='/verify' element={<Verify />} /> 
+        <Route path='/verify' element={<Verify />} />
       </Routes>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
 export default App;
