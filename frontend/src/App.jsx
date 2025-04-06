@@ -16,6 +16,7 @@ import Verify from './pages/Verify';
 import HealthcareBot from './components/Chatbot';
 import DoctorForm from './pages/NearbyDoctors';
 import SearchResults from './pages/SearchResults';  // ✅ Import SearchResults
+import AIHealthAnalyzer from './pages/AnalyseReport';
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
         <Route path='/my-appointments' element={<MyAppointments />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route path='/verify' element={<Verify />} />
+         <Route path="/analyzer" element={<AIHealthAnalyzer />} />
       </Routes>
       <Footer />
     </div>

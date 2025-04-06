@@ -7,6 +7,7 @@ import userRouter from "./routes/userRoute.js";
 import doctorRouter from "./routes/doctorRoute.js";
 import adminRouter from "./routes/adminRoute.js";
 import fetchDoctorRouter from "./routes/fetchDoctors.js"; // Ensure correct import
+import analyzeRoute from "./routes/analyseRoute.js"; // add this line
 
 // App config
 const app = express();
@@ -25,6 +26,7 @@ app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
 app.use("/api/search-doctors", fetchDoctorRouter); // Use correct variable name
+app.use("/analyze",analyzeRoute);
 
 // Test route
 app.get("/", (req, res) => {
