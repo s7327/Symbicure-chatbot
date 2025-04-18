@@ -66,5 +66,4 @@ The chatbot is integrated using an AI-powered API to assist users with booking a
 ## Contribution
 Feel free to contribute to this project. Fork the repository and submit a pull request with improvements.
 
-## License
-This project is licensed under the **MIT License**.
+
