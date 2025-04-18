@@ -26,7 +26,9 @@ const AIHealthAnalyzer = () => {
     if (query) formData.append("query", query);
 
     try {
-      const res = await axios.post("http://localhost:4000/analyze", formData);
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      const res = await axios.post(`${backendUrl}/analyze`, formData);
+
       setResponse(res.data.response);
     } catch (error) {
       console.error(error);
