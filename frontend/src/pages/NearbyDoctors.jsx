@@ -37,17 +37,20 @@ const NearbyDoctorsForm = () => {
     setLoading(true);
     setError("");
     setDoctors([]);
-
+  
     try {
       let lat, lon;
+      console.log("Search Data:", searchData);  // Log search data before processing
       if (searchData.location) {
         const geoResponse = await fetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchData.location)}`
         );
         const geoData = await geoResponse.json();
+        console.log("GeoData:", geoData);  // Check the output of Nominatim
         if (geoData.length > 0) {
           lat = geoData[0].lat;
           lon = geoData[0].lon;
+          console.log("Location Found: ", lat, lon);  // Log lat/lon if location found
         } else {
           throw new Error("Location not found.");
         }
@@ -57,25 +60,32 @@ const NearbyDoctorsForm = () => {
             (position) => {
               lat = position.coords.latitude;
               lon = position.coords.longitude;
+              console.log("User's Geolocation:", lat, lon);  // Log geolocation coordinates
               resolve();
             },
             (err) => reject(err)
           );
         });
       }
+  
+      console.log("Final Lat/Lon:", lat, lon); // Log lat/lon for debugging
+  
+      const radius = 10000;
+      // const overpassQuery = `[out:json]; node[amenity=doctors](around:${radius},${lat},${lon}); out;`;
+      const overpassQuery = `[out:json]; node[amenity=hospital](around:${radius},${lat},${lon}); out;`;
 
-      const radius = 5000;
-      const overpassQuery = `[out:json]; node[amenity=doctors](around:${radius},${lat},${lon}); out;`;
+      console.log("Overpass Query:", overpassQuery);  // Log the Overpass query
       const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(overpassQuery)}`;
       const response = await fetch(url);
       const data = await response.json();
-
+      console.log("Overpass Data:", data); // Log Overpass data for debugging
+  
       if (!data.elements.length) {
         setError("No doctors found in this area.");
         setLoading(false);
         return;
       }
-
+  
       const calculateDistance = (lat1, lon1, lat2, lon2) => {
         const toRadians = (deg) => (deg * Math.PI) / 180;
         const R = 6371;
@@ -87,19 +97,22 @@ const NearbyDoctorsForm = () => {
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
       };
-
+  
       let filteredDoctors = data.elements.map((doctor) => ({
         id: doctor.id,
         name: doctor.tags?.name || "Unknown Doctor",
         speciality: searchData.specialist || "General Practitioner",
         lat: doctor.lat,
         lon: doctor.lon,
-        address: doctor.tags?.["addr:street"] || "Unknown Location",
+        // address: doctor.tags?.["addr:street"] || "Unknown Location",
         mapLink: `https://www.google.com/maps?q=${doctor.lat},${doctor.lon}`,
         distance: calculateDistance(lat, lon, doctor.lat, doctor.lon),
       }));
-
-      filteredDoctors = filteredDoctors.sort((a, b) => a.distance - b.distance).slice(0, 6);
+  
+      console.log("Filtered Doctors:", filteredDoctors);  // Log filtered doctors before sorting
+  
+      filteredDoctors = filteredDoctors.sort((a, b) => a.distance - b.distance).slice(0, 12);
+      console.log("Sorted Doctors (Top 6):", filteredDoctors);  // Log the top 6 closest doctors
       navigate("/search-results", { state: { results: filteredDoctors } });
     } catch (error) {
       console.error("Error fetching doctors:", error);
@@ -108,7 +121,7 @@ const NearbyDoctorsForm = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="max-w-md mx-auto my-10 p-8 bg-white rounded-2xl shadow-2xl border border-gray-100">
       <div className="text-center mb-8">
