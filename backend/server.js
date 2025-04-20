@@ -11,6 +11,12 @@ import { Server } from "socket.io";
 import connectDB from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
 
+
+import './models/userModel.js';     // <-- ADD THIS LINE
+import './models/doctorModel.js';   // <-- ADD THIS LINE
+import './models/appointmentModel.js'; // <-- Keep or add this line
+import './models/ChatMessage.js'; // <-- Keep or add this line
+
 // Models
 import ChatMessage from "./models/ChatMessage.js";
 import Appointment from './models/appointmentModel.js';
