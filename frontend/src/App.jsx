@@ -15,8 +15,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify';
 import HealthcareBot from './components/Chatbot';
 import DoctorForm from './pages/NearbyDoctors';
-import SearchResults from './pages/SearchResults';  // ✅ Import SearchResults
+import SearchResults from './pages/SearchResults';
 import AIHealthAnalyzer from './pages/AnalyseReport';
+import Chat from './pages/Chat.jsx';
 
 const App = () => {
   return (
@@ -32,12 +33,18 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/NearbyDoctors' element={<DoctorForm />} />
-        <Route path='/search-results' element={<SearchResults />} />  {/* ✅ Added SearchResults Route */}
+        <Route path='/search-results' element={<SearchResults />} />
+        {/* REMOVED the duplicate route */}
+        {/* <Route path="/chat/:appointmentId" element={<ChatWithDoctor />} /> */}
+
+        {/* Use ONLY ONE route definition for this path */}
+        <Route path="/chat/:appointmentId" element={<Chat />} />
+
         <Route path='/appointment/:docId' element={<Appointment />} />
         <Route path='/my-appointments' element={<MyAppointments />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route path='/verify' element={<Verify />} />
-         <Route path="/analyzer" element={<AIHealthAnalyzer />} />
+        <Route path="/analyzer" element={<AIHealthAnalyzer />} />
       </Routes>
       <Footer />
     </div>
