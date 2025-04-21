@@ -26,7 +26,7 @@ const AIHealthAnalyzer = () => {
     if (query) formData.append("query", query);
 
     try {
-      const res = await axios.post("http://localhost:4000/analyze", formData);
+      const res = await axios.post("http://localhost:4000/api/analyze", formData);
       setResponse(res.data.response);
     } catch (error) {
       console.error(error);

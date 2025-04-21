@@ -6,6 +6,7 @@ import doctorModel from "../models/doctorModel.js";
 import validator from "validator"; // Keep for addDoctor validation
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/userModel.js";
+import bcrypt from 'bcrypt'; 
 
 // API for admin login
 const loginAdmin = async (req, res) => {
